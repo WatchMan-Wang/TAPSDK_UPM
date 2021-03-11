@@ -77,12 +77,13 @@ namespace TDSEditor
                 proj.AddFrameworkToProject(unityFrameworkTarget, "AVFoundation.framework", false);
                 proj.AddFrameworkToProject(unityFrameworkTarget, "MobileCoreServices.framework", false);
                 proj.AddFrameworkToProject(unityFrameworkTarget, "AppTrackingTransparency.framework", true);
+                proj.AddFrameworkToProject(unityFrameworkTarget, "CoreMotion.framework", false);
                 // 动态库
                 Debug.Log("添加framework成功");
 
                 // 添加 tbd
                 // 参数: 目标targetGUID, tdbGUID
-                proj.AddFileToBuild(unityFrameworkTarget, proj.AddFile("usr/lib/libc++.tbd", "libc++.tbd",PBXSourceTree.Sdk));
+                proj.AddFileToBuild(unityFrameworkTarget, proj.AddFile("usr/lib/libc++.tbd", "libc++.tbd","libsqlite3.0.tbd","libz.tbd","libresolv.tbd",PBXSourceTree.Sdk));
                 
                 Debug.Log("添加tbd成功");
 
