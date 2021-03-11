@@ -6,7 +6,7 @@
 
 * IOS **10**或更高版本
 
-* Android 目标为**API21**或更高版本
+* Android targetSdkVersion为**21**或更高版本
 
 ### 1.添加TapSDK
 
