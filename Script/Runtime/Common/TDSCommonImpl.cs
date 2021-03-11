@@ -16,42 +16,171 @@ namespace TDSCommon
 
         private TDSCommonImpl()
         {
-            EngineBridge.GetInstance().Register("com.tds.common.wrapper.TDSCommonService", "com.tds.common.wrapper.TDSCommonServiceImpl");
+            EngineBridge.GetInstance().Register(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, TDSCommonConstants.TDS_COMMON_SERVICE_IMPL);
         }
 
         public void SetLanguage(string language)
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("language", language);
-            Command command = new Command("TDSCommonService", "setLanguage", false, dic);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "setLanguage", false, dic);
             EngineBridge.GetInstance().CallHandler(command);
         }
 
         public void GetRegionCode(Action<bool> callback)
         {
-            Command command = new Command("TDSCommonService", "getRegionCode", true, null);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "getRegionCode", true, null);
             EngineBridge.GetInstance().CallHandler(command, (result) =>
             {
                 if (result.code != Result.RESULT_SUCCESS)
                 {
+                    callback(false);
                     return;
                 }
 
                 if (string.IsNullOrEmpty(result.content))
                 {
+                    callback(false);
                     return;
                 }
 
-                CommonRegionWrapper wrapper = new CommonRegionWrapper(result.content);
-                if (wrapper != null)
-                {
-                    callback(wrapper.isMainland);
-                }
-
+                callback(BridgeBooleanWrapper.GetBoolFromDic("isMainland", result.content));
             });
 
         }
 
+        public void IsTapTapInstalled(Action<bool> callback)
+        {
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "isTapTapInstalled", true, null);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("isTapTapInstalled", result.content));
+             });
+        }
+
+        public void IsTapTapGlobalInstalled(Action<bool> callback)
+        {
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "isTapGlobalInstalled", true, null);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("isTapGlobalInstalled", result.content));
+             });
+        }
+        public void UpdateGameInTapTap(string appId, Action<bool> callback)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("appId", appId);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "updateGameInTapTap", true, dic);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("updateGameInTapTap", result.content));
+             });
+        }
+
+        public void UpdateGameInTapGlobal(string appId, Action<bool> callback)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("appId", appId);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "updateGameInTapGlobal", true, dic);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("updateGameInTapGlobal", result.content));
+             });
+        }
+
+        public void OpenReviewInTapTap(string appId, Action<bool> callback)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("appId", appId);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "openReviewInTapTap", true, dic);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("openReviewInTapTap", result.content));
+             });
+        }
+
+        public void OpenReviewInTapTapGlobal(string appId, Action<bool> callback)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("appId", appId);
+            Command command = new Command(TDSCommonConstants.TDS_COMMON_SERVICE_CLZ, "openReviewInTapGlobal", true, dic);
+            EngineBridge.GetInstance().CallHandler(command, (result) =>
+             {
+                 if (result.code != Result.RESULT_SUCCESS)
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 if (string.IsNullOrEmpty(result.content))
+                 {
+                     callback(false);
+                     return;
+                 }
+
+                 callback(BridgeBooleanWrapper.GetBoolFromDic("openReviewInTapGlobal", result.content));
+             });
+        }
     }
 
 }

@@ -28,8 +28,36 @@ namespace TDSCommon
             return dic;
         }
 
+        public void Register(string serviceClz, string serviceImp)
+        {
+            //IOS无需注册
+        }
+
+        public void Call(Command command)
+        {
+#if UNITY_IOS
+            callHandler(command.toJSON());
+#endif
+        }
+
+        public void Call(Command command, Action<Result> action)
+        {
+#if UNITY_IOS
+            if (command.callback && !string.IsNullOrEmpty(command.callbackId))
+            {
+                if (!dic.ContainsKey(command.callbackId))
+                {
+                    dic.Add(command.callbackId, action);
+                }
+            }
+            registerHandler(command.toJSON(), engineBridgeDelegate);
+#endif
+        }
+#if UNITY_IOS
+
         private delegate void EngineBridgeDelegate(string result);
         [AOT.MonoPInvokeCallbackAttribute(typeof(EngineBridgeDelegate))]
+        
         static void engineBridgeDelegate(string resultJson)
         {
             Debug.Log("resultJson From IOS:" + resultJson);
@@ -51,37 +79,11 @@ namespace TDSCommon
             }
         }
 
-        public void Register(string serviceClz, string serviceImp)
-        {
-            //IOS无需注册
-        }
-
-        public void Call(Command command)
-        {   
-            #if UNITY_IOS
-            callHandler(command.toJSON());
-            #endif
-        }
-
-        public void Call(Command command, Action<Result> action)
-        {
-            #if UNITY_IOS
-            if (command.callback && !string.IsNullOrEmpty(command.callbackId))
-            {
-                if (!dic.ContainsKey(command.callbackId))
-                {
-                    dic.Add(command.callbackId, action);
-                }
-            }
-            registerHandler(command.toJSON(), engineBridgeDelegate);
-            #endif
-        }
-    #if UNITY_IOS
     [DllImport("__Internal")]
     private static extern void callHandler(string command);
 
     [DllImport("__Internal")]
     private static extern void registerHandler(string command,EngineBridgeDelegate engineBridgeDelegate);
-    #endif
+#endif
     }
 }
