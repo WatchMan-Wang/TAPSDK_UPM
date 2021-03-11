@@ -6,7 +6,7 @@
 
 * IOS **10**或更高版本
 
-* Android targetSdkVersion为**21**或更高版本
+* Android minSdkVersion为**21**或更高版本
 
 ### 1.添加TapSDK
 
@@ -25,11 +25,11 @@
 
 编辑Assets/Plugins/Android/AndroidManifest.xml文件,在Application Tag下添加以下代码。
 ```xml
-    <activity
-        android:name="com.taptap.sdk.TapTapActivity"
-        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-        android:exported="false"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.taptap.sdk.TapTapActivity"
+    android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+    android:exported="false"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
 ```
 
 #### 2.2 IOS 配置
